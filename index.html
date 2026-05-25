@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Morina Trading — Physical Commodity Brokerage</title>
+  <meta name="description" content="Morina Trading is an independent commodity brokerage connecting verified suppliers with qualified buyers across EU, Asia, and global markets." />
+  <meta name="author" content="Argent Morina" />
+  <meta property="og:title" content="Morina Trading — Physical Commodity Brokerage" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://morinatrading.com" />
+  <meta name="theme-color" content="#07090c" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:          #07090c;
+      --surface:     #0b0e13;
+      --border:      #171d26;
+      --muted:       #4a5568;
+      --text:        #8fa0b8;
+      --bright:      #d6e4f0;
+      --accent:      #4a8fa8;
+      --accent-dim:  #2a5566;
+      --accent-glow: rgba(74,143,168,0.12);
+      --font-serif:  'Cormorant', Georgia, serif;
+      --font-sans:   'Outfit', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── LANGUAGE SWITCHER ── */
+    .lang-switcher {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .lang-btn {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 9px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .lang-btn:hover { color: var(--text); }
+    .lang-btn.active { color: var(--accent); border-color: var(--accent-dim); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: linear-gradient(to bottom, rgba(7,9,12,0.95) 0%, transparent 100%);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px; text-decoration: none;
+    }
+    .nav-logo-mark {
+      width: 28px; height: 28px;
+      border: 1px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-serif); font-size: 16px; font-weight: 400;
+      color: var(--accent); border-radius: 2px;
+    }
+    .nav-logo-text {
+      font-family: var(--font-serif); font-size: 17px; font-weight: 400;
+      color: var(--bright); letter-spacing: 0.04em;
+    }
+    .nav-logo-text span {
+      font-family: var(--font-sans); font-size: 10px; font-weight: 400;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); margin-left: 6px;
+    }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-inquiry-btn {
+      font-family: var(--font-sans); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); background: transparent;
+      border: 1px solid var(--accent-dim);
+      padding: 8px 18px; border-radius: 100px; cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-inquiry-btn:hover { background: var(--accent); color: #fff; }
+
+    /* Mobile nav */
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .nav-logo-text span { display: none; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 65% 25%, rgba(30,60,90,0.6) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 70% at 25% 75%, rgba(20,50,70,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 100% at 50% 50%, #0d1520 0%, #07090c 100%);
+      z-index: 0;
+    }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+    .hero-shape {
+      position: absolute; top: 5%; right: -8%; width: 65%; height: 70%;
+      background: radial-gradient(ellipse at 40% 40%, rgba(74,143,168,0.14) 0%, rgba(30,80,110,0.1) 30%, transparent 70%);
+      border-radius: 40% 60% 55% 45% / 45% 35% 65% 55%;
+      filter: blur(40px); z-index: 1;
+    }
+    .hero-shape-2 {
+      position: absolute; bottom: 10%; left: -8%; width: 45%; height: 45%;
+      background: radial-gradient(ellipse, rgba(40,100,130,0.1) 0%, transparent 70%);
+      filter: blur(50px); z-index: 1;
+    }
+    .hero-fade {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
+      background: linear-gradient(to top, var(--bg) 0%, transparent 100%); z-index: 2;
+    }
+    .hero-content {
+      position: relative; z-index: 10;
+      padding: 0 48px 80px;
+      max-width: 760px;
+    }
+    @media (max-width: 640px) { .hero-content { padding: 0 24px 60px; } }
+
+    .hero-tag {
+      font-family: var(--font-sans); font-size: 10px; font-weight: 400;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 28px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hero-tag::before {
+      content: ''; display: block; width: 28px; height: 1px; background: var(--accent-dim);
+    }
+    .label-num { color: var(--accent); }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(48px, 9vw, 88px);
+      font-weight: 300; line-height: 1.0;
+      color: var(--bright); margin-bottom: 28px; letter-spacing: -0.01em;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      font-family: var(--font-sans); font-size: 15px; font-weight: 300;
+      color: rgba(143,160,184,0.75); line-height: 1.75;
+      max-width: 420px; margin-bottom: 40px;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-inquiry {
+      flex: 1; min-width: 160px;
+      padding: 17px 28px; background: var(--accent); color: #fff;
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      text-align: center; text-decoration: none;
+      border-radius: 100px; border: none; cursor: pointer;
+      transition: background 0.25s, transform 0.15s;
+    }
+    .btn-inquiry:hover { background: #5aa8c4; }
+    .btn-inquiry:active { transform: scale(0.97); }
+    .btn-capabilities {
+      flex: 1; min-width: 160px;
+      padding: 16px 28px; background: transparent; color: var(--text);
+      font-family: var(--font-sans); font-size: 11px; font-weight: 400;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      text-align: center; text-decoration: none;
+      border: 1px solid var(--border); border-radius: 100px; cursor: pointer;
+      transition: border-color 0.25s, color 0.25s, transform 0.15s;
+    }
+    .btn-capabilities:hover { border-color: var(--accent-dim); color: var(--bright); }
+    .btn-capabilities:active { transform: scale(0.97); }
+
+    /* ── TICKER ── */
+    .ticker {
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 13px 0; overflow: hidden; background: rgba(255,255,255,0.015);
+    }
+    .ticker-track {
+      display: flex; animation: tickerScroll 40s linear infinite; white-space: nowrap;
+    }
+    .ticker-item {
+      font-family: var(--font-sans); font-size: 10px; font-weight: 400;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+      padding: 0 28px; display: flex; align-items: center; gap: 28px; flex-shrink: 0;
+    }
+    .ticker-item::after { content: '·'; color: var(--accent); font-size: 14px; }
+    @keyframes tickerScroll {
+      from { transform: translateX(0); } to { transform: translateX(-50%); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 48px; }
+    @media (max-width: 640px) { section { padding: 72px 24px; } }
+
+    .section-label {
+      font-family: var(--font-sans); font-size: 10px; font-weight: 400;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 14px;
+    }
+    .section-label::after { content: ''; flex: 0 0 40px; height: 1px; background: var(--border); }
+    h2 {
+      font-family: var(--font-serif); font-size: clamp(36px, 7vw, 56px);
+      font-weight: 300; color: var(--bright); line-height: 1.1;
+      letter-spacing: -0.01em; margin-bottom: 40px;
+    }
+    h2 em { font-style: italic; color: var(--accent); }
+
+    /* ── MODEL ── */
+    .model { background: var(--surface); border-top: 1px solid var(--border); }
+    .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+    @media (max-width: 860px) { .model-grid { grid-template-columns: 1fr; gap: 40px; } }
+    .model-intro {
+      font-family: var(--font-serif); font-size: 19px; font-weight: 300;
+      color: var(--text); line-height: 1.8;
+    }
+    .model-intro strong { color: var(--bright); font-weight: 400; }
+    .steps { display: flex; flex-direction: column; }
+    .step {
+      display: grid; grid-template-columns: 36px 1fr; gap: 20px;
+      padding: 26px 0; border-bottom: 1px solid var(--border);
+    }
+    .step:first-child { border-top: 1px solid var(--border); }
+    .step-n { font-family: var(--font-serif); font-size: 16px; font-style: italic; color: var(--accent); padding-top: 2px; }
+    .step h4 { font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bright); margin-bottom: 5px; }
+    .step p { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.65; }
+
+    /* ── COMMODITIES ── */
+    .commodities { background: var(--bg); }
+    .commodity-list { display: flex; flex-direction: column; margin-top: 8px; }
+    .commodity-item { padding: 36px 0; border-bottom: 1px solid var(--border); }
+    .commodity-item:first-child { border-top: 1px solid var(--border); }
+    .commodity-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; gap: 16px; }
+    .commodity-name { font-family: var(--font-serif); font-size: 30px; font-weight: 300; color: var(--bright); line-height: 1.1; }
+    .commodity-type { font-family: var(--font-sans); font-size: 10px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-top: 4px; }
+    .commodity-status {
+      font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+      border: 1px solid var(--border); padding: 5px 10px; border-radius: 100px; white-space: nowrap; flex-shrink: 0;
+    }
+    .commodity-status.active { color: #5faa78; border-color: rgba(95,170,120,0.25); }
+    .commodity-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+    .commodity-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .ctag {
+      font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+      border: 1px solid var(--border); padding: 4px 10px; border-radius: 100px;
+    }
+
+    /* ── PRINCIPLES ── */
+    .principles { background: var(--surface); border-top: 1px solid var(--border); }
+    .principle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 8px; }
+    @media (max-width: 720px) { .principle-grid { grid-template-columns: 1fr; } }
+    .principle {
+      display: grid; grid-template-columns: 36px 1fr; gap: 20px;
+      padding: 32px 0; border-bottom: 1px solid var(--border);
+    }
+    .principle:nth-child(odd) { padding-right: 40px; border-right: 1px solid var(--border); }
+    .principle:nth-child(even) { padding-left: 40px; }
+    @media (max-width: 720px) {
+      .principle:nth-child(odd) { padding-right: 0; border-right: none; }
+      .principle:nth-child(even) { padding-left: 0; }
+    }
+    .principle:first-child, .principle:nth-child(2) { border-top: 1px solid var(--border); }
+    @media (max-width: 720px) { .principle:nth-child(2) { border-top: none; } }
+    .principle-n { font-family: var(--font-serif); font-size: 16px; font-style: italic; color: var(--accent); padding-top: 3px; }
+    .principle h4 { font-family: var(--font-sans); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bright); margin-bottom: 8px; }
+    .principle p { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    .contact { position: relative; overflow: hidden; background: var(--bg); border-top: 1px solid var(--border); }
+    .contact-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 55% at 80% 50%, var(--accent-glow) 0%, transparent 65%); pointer-events: none; }
+    .contact-inner { position: relative; z-index: 1; max-width: 600px; }
+    .contact-lead { font-family: var(--font-serif); font-size: 18px; font-weight: 300; color: var(--muted); line-height: 1.8; margin-bottom: 48px; }
+    .contact-rows { display: flex; flex-direction: column; }
+    .contact-row { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid var(--border); text-decoration: none; gap: 16px; }
+    .contact-row:first-child { border-top: 1px solid var(--border); }
+    .cr-label { font-family: var(--font-sans); font-size: 10px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+    .cr-value { font-family: var(--font-serif); font-size: 17px; font-weight: 300; color: var(--text); transition: color 0.2s; word-break: break-all; }
+    a.contact-row:hover .cr-value { color: var(--accent); }
+    .cr-arrow { color: var(--border); font-size: 18px; transition: color 0.2s, transform 0.2s; flex-shrink: 0; }
+    a.contact-row:hover .cr-arrow { color: var(--accent); transform: translateX(4px); }
+    .contact-cta-wrap { margin-top: 40px; max-width: 400px; }
+
+    /* ── FOOTER ── */
+    footer { padding: 32px 48px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+    @media (max-width: 640px) { footer { padding: 28px 24px; } }
+    .footer-logo { font-family: var(--font-serif); font-size: 14px; font-weight: 300; color: var(--text); }
+    .footer-tagline { font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .footer-meta { font-family: var(--font-sans); font-size: 10px; letter-spacing: 0.1em; color: var(--muted); margin-top: 2px; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(7,9,12,0.85);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      z-index: 1000; display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px 20px 0 0; padding: 28px 28px 44px;
+      width: 100%; max-width: 540px;
+      transform: translateY(40px);
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+      max-height: 92svh; overflow-y: auto;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 24px; }
+    .modal-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; }
+    .modal-title { font-family: var(--font-serif); font-size: 26px; font-weight: 300; color: var(--bright); line-height: 1.15; }
+    .modal-title em { font-style: italic; color: var(--accent); }
+    .modal-close {
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+      font-size: 15px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: border-color 0.2s, color 0.2s; margin-top: 2px;
+    }
+    .modal-close:hover { border-color: var(--accent); color: var(--accent); }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-family: var(--font-sans); font-size: 10px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 14px;
+      font-family: var(--font-sans); font-size: 14px; font-weight: 300;
+      color: var(--bright); outline: none; transition: border-color 0.2s; -webkit-appearance: none;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted); }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
+    .form-group textarea { resize: none; height: 90px; }
+    .form-group select { color: var(--text); cursor: pointer; }
+    .form-group select option { background: var(--surface); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    .modal-submit {
+      width: 100%; padding: 16px 24px; background: var(--accent); color: #fff;
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      border: none; border-radius: 100px; cursor: pointer;
+      transition: background 0.25s, transform 0.15s; margin-top: 6px;
+    }
+    .modal-submit:hover { background: #5aa8c4; }
+    .modal-submit:active { transform: scale(0.98); }
+    .modal-success { display: none; text-align: center; padding: 24px 0; }
+    .modal-success.show { display: block; }
+    .modal-form.hide { display: none; }
+    .success-icon { width: 48px; height: 48px; border: 1px solid rgba(95,170,120,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 20px; color: #5faa78; }
+    .success-title { font-family: var(--font-serif); font-size: 26px; font-weight: 300; color: var(--bright); margin-bottom: 10px; }
+    .success-sub { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+    /* ── FADE ── */
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">M</div>
+      <div class="nav-logo-text">Morina <span>TRADING</span></div>
+    </a>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" onclick="setLang('fr')">FR</button>
+        <button class="lang-btn" onclick="setLang('ar')">AR</button>
+      </div>
+      <button class="nav-inquiry-btn" onclick="openModal()" data-t="nav_inquiry">Make Inquiry</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape-2"></div>
+    <div class="hero-fade"></div>
+    <div class="hero-content fade-up">
+      <div class="hero-tag">
+        <span class="label-num">i.</span>
+        <span data-t="hero_tag">Independent Desk · Qualified Mandates Only</span>
+      </div>
+      <h1 data-t="hero_h1_html">The quiet bridge<br />of <em>industrial<br />flow.</em></h1>
+      <p class="hero-sub" data-t="hero_sub">Morina Trading connects verified suppliers with qualified buyers across EU, Asia, and global markets. Serious volume. Direct relationships. Every deal protected.</p>
+      <div class="hero-btns">
+        <button class="btn-inquiry" onclick="openModal()" data-t="btn_inquiry">Make Inquiry</button>
+        <button class="btn-capabilities" onclick="document.getElementById('commodities').scrollIntoView({behavior:'smooth'})" data-t="btn_capabilities">See Capabilities</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+
+  <!-- MODEL -->
+  <section class="model" id="model">
+    <div class="section-label"><span class="label-num">ii.</span> <span data-t="model_label">The Model</span></div>
+    <h2 data-t="model_h2_html">We own nothing.<br /><em>We move everything.</em></h2>
+    <div class="model-grid">
+      <p class="model-intro fade-up" data-t="model_intro_html">Morina Trading operates as an <strong>independent commodity broker</strong> — we source verified supply, qualify real demand, and structure deals that protect every party from first contact through execution.</p>
+      <div class="steps fade-up">
+        <div class="step"><span class="step-n">i.</span><div><h4 data-t="step1_title">Qualify Demand</h4><p data-t="step1_body">Buyer intent is confirmed before any supplier contact is made. We never approach supply without verified need on the other side.</p></div></div>
+        <div class="step"><span class="step-n">ii.</span><div><h4 data-t="step2_title">Verify Supply</h4><p data-t="step2_body">Every supplier in our network is reviewed — corporate registration, certifications, and references confirmed before engagement.</p></div></div>
+        <div class="step"><span class="step-n">iii.</span><div><h4 data-t="step3_title">Protect Both Parties</h4><p data-t="step3_body">NCND agreements are signed before any introduction is made. No names, no details exchanged without written protection in place.</p></div></div>
+        <div class="step"><span class="step-n">iv.</span><div><h4 data-t="step4_title">Logistics is the deal.</h4><p data-t="step4_body">A signed contract is the beginning, not the close. Specs, incoterms, payment structure, and inspection are all part of the same mandate.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMODITIES -->
+  <section class="commodities" id="commodities">
+    <div class="section-label"><span class="label-num">iii.</span> <span data-t="comm_label">Active Desk</span></div>
+    <h2 data-t="comm_h2_html">Where we<br /><em>operate.</em></h2>
+    <div class="commodity-list fade-up">
+      <div class="commodity-item">
+        <div class="commodity-header">
+          <div><div class="commodity-name" data-t="c1_name">Glycerin</div><div class="commodity-type" data-t="c1_type">Industrial Chemical</div></div>
+          <div class="commodity-status active" data-t="status_active">Active</div>
+        </div>
+        <p class="commodity-desc" data-t="c1_desc">Crude and refined technical glycerin from producers in Indonesia, Malaysia, and Germany. Active in the EU chemical market — cosmetic, pharmaceutical, and industrial grade.</p>
+        <div class="commodity-tags"><span class="ctag">Crude 80%</span><span class="ctag">Refined 99.7%</span><span class="ctag">USP / BP</span><span class="ctag">FOB · FCA</span><span class="ctag">1,000 MT+</span></div>
+      </div>
+      <div class="commodity-item">
+        <div class="commodity-header">
+          <div><div class="commodity-name" data-t="c2_name">Oleochemicals</div><div class="commodity-type" data-t="c2_type">Fatty Acids &amp; Derivatives</div></div>
+          <div class="commodity-status active" data-t="status_active">Active</div>
+        </div>
+        <p class="commodity-desc" data-t="c2_desc">Fatty acids, fatty alcohols, and surfactants from APAC producers. Focused on the German and broader EU chemical market where import demand continues to grow.</p>
+        <div class="commodity-tags"><span class="ctag">Fatty Acids</span><span class="ctag">Fatty Alcohols</span><span class="ctag">Surfactants</span><span class="ctag">APAC Origin</span><span class="ctag">EU Buyers</span></div>
+      </div>
+      <div class="commodity-item">
+        <div class="commodity-header">
+          <div><div class="commodity-name" data-t="c3_name">Copper</div><div class="commodity-type" data-t="c3_type">Non-Ferrous Metal</div></div>
+          <div class="commodity-status" data-t="status_pipeline">Pipeline</div>
+        </div>
+        <p class="commodity-desc" data-t="c3_desc">Copper cathode, concentrate, and ore from producers across DRC, Zambia, and Tanzania. Buyer interest in Shanghai and Hong Kong. Third-party inspection required on all deals.</p>
+        <div class="commodity-tags"><span class="ctag">Cathode</span><span class="ctag">Concentrate</span><span class="ctag">LME Grade A</span><span class="ctag">DRC · Zambia</span><span class="ctag">SGS Inspected</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="principles" id="principles">
+    <div class="section-label"><span class="label-num">iv.</span> <span data-t="prin_label">How We Work</span></div>
+    <h2 data-t="prin_h2_html">Non-negotiable<br /><em>standards.</em></h2>
+    <div class="principle-grid fade-up">
+      <div class="principle"><span class="principle-n">i.</span><div><h4 data-t="p1_title">Buyer First</h4><p data-t="p1_body">Demand is confirmed before any supplier is approached. We do not pitch supply into a vacuum.</p></div></div>
+      <div class="principle"><span class="principle-n">ii.</span><div><h4 data-t="p2_title">Market-Verified Pricing</h4><p data-t="p2_body">Every price indication is benchmarked against Platts, LME, or ICIS before it is communicated. No estimates presented as fact.</p></div></div>
+      <div class="principle"><span class="principle-n">iii.</span><div><h4 data-t="p3_title">NCND Before Introduction</h4><p data-t="p3_body">No counterparty identity is shared without a signed Non-Circumvention Non-Disclosure Agreement. Every deal. No exceptions.</p></div></div>
+      <div class="principle"><span class="principle-n">iv.</span><div><h4 data-t="p4_title">Logistics is the trade.</h4><p data-t="p4_body">A signed contract is the beginning, not the close. Freight, finance, and inspection are part of the same mandate.</p></div></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-bg"></div>
+    <div class="contact-inner">
+      <div class="section-label"><span class="label-num">v.</span> <span data-t="contact_label">Open a Discussion</span></div>
+      <h2 data-t="contact_h2_html">Tell us what you<br />need. <em>We'll tell you<br />if we can deliver it.</em></h2>
+      <p class="contact-lead fade-up" data-t="contact_lead">We work with buyers who know what they need and suppliers who can deliver it. If you have verified supply or confirmed demand, reach out directly.</p>
+      <div class="contact-rows fade-up">
+        <a href="mailto:argent@morinatrading.com" class="contact-row">
+          <span class="cr-label" data-t="cr_email">Email</span>
+          <span class="cr-value">argent@morinatrading.com</span>
+          <span class="cr-arrow">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/argent-morina-a33a30409" target="_blank" rel="noopener" class="contact-row">
+          <span class="cr-label">LinkedIn</span>
+          <span class="cr-value">Argent Morina</span>
+          <span class="cr-arrow">→</span>
+        </a>
+        <div class="contact-row" style="cursor:default;">
+          <span class="cr-label" data-t="cr_location">Location</span>
+          <span class="cr-value" data-t="cr_location_val">Cologne–Bonn, Germany</span>
+          <span class="cr-arrow" style="opacity:0;">→</span>
+        </div>
+      </div>
+      <div class="contact-cta-wrap fade-up">
+        <button class="btn-inquiry" onclick="openModal()" data-t="btn_inquiry">Make Inquiry</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Morina Trading · Argent Morina</div>
+    <div class="footer-tagline" data-t="footer_tagline">Physical Commodity Brokerage · Cologne, Germany</div>
+    <div class="footer-meta">© 2026 · argent@morinatrading.com · Est. 2026</div>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-form" id="modalForm">
+        <div class="modal-header">
+          <div class="modal-title" data-t="modal_title_html">Open a<br /><em>discussion.</em></div>
+          <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label data-t="f_name">Name</label><input type="text" id="f-name" data-placeholder-t="f_name_ph" placeholder="Your name" /></div>
+          <div class="form-group"><label data-t="f_company">Company</label><input type="text" id="f-company" data-placeholder-t="f_company_ph" placeholder="Company name" /></div>
+        </div>
+        <div class="form-group"><label data-t="f_email">Email</label><input type="email" id="f-email" placeholder="your@email.com" /></div>
+        <div class="form-group">
+          <label data-t="f_role">I am a</label>
+          <select id="f-role">
+            <option value="" disabled selected data-t="f_role_select">Select role</option>
+            <option value="buyer" data-t="f_role_buyer">Buyer — looking for supply</option>
+            <option value="supplier" data-t="f_role_supplier">Supplier — looking for buyers</option>
+            <option value="other" data-t="f_role_other">Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label data-t="f_message">Message</label><textarea id="f-message" data-placeholder-t="f_message_ph" placeholder="Commodity, volume, origin/destination, timeline — the more specific, the better."></textarea></div>
+        <button class="modal-submit" onclick="submitForm()" data-t="f_submit">Send Inquiry</button>
+      </div>
+      <div class="modal-success" id="modalSuccess">
+        <div class="success-icon">✓</div>
+        <div class="success-title" data-t="success_title">Inquiry received.</div>
+        <p class="success-sub" data-t="success_sub">Your mail app should have opened with a pre-filled draft. If not, send directly to:</p>
+        <a href="mailto:argent@morinatrading.com" style="display:block;margin-top:14px;font-family:var(--font-serif);font-size:17px;color:var(--accent);text-decoration:none;">argent@morinatrading.com</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ─────────────────────────────────────────
+  // TRANSLATIONS
+  // ─────────────────────────────────────────
+  const T = {
+    en: {
+      nav_inquiry: 'Make Inquiry',
+      hero_tag: 'Independent Desk · Qualified Mandates Only',
+      hero_h1_html: 'The quiet bridge<br />of <em>industrial<br />flow.</em>',
+      hero_sub: 'Morina Trading connects verified suppliers with qualified buyers across EU, Asia, and global markets. Serious volume. Direct relationships. Every deal protected.',
+      btn_inquiry: 'Make Inquiry',
+      btn_capabilities: 'See Capabilities',
+      model_label: 'The Model',
+      model_h2_html: 'We own nothing.<br /><em>We move everything.</em>',
+      model_intro_html: 'Morina Trading operates as an <strong>independent commodity broker</strong> — we source verified supply, qualify real demand, and structure deals that protect every party from first contact through execution.',
+      step1_title: 'Qualify Demand', step1_body: 'Buyer intent is confirmed before any supplier contact is made. We never approach supply without verified need on the other side.',
+      step2_title: 'Verify Supply', step2_body: 'Every supplier in our network is reviewed — corporate registration, certifications, and references confirmed before engagement.',
+      step3_title: 'Protect Both Parties', step3_body: 'NCND agreements are signed before any introduction is made. No names, no details exchanged without written protection in place.',
+      step4_title: 'Logistics is the deal.', step4_body: 'A signed contract is the beginning, not the close. Specs, incoterms, payment structure, and inspection are all part of the same mandate.',
+      comm_label: 'Active Desk',
+      comm_h2_html: 'Where we<br /><em>operate.</em>',
+      c1_name: 'Glycerin', c1_type: 'Industrial Chemical', c1_desc: 'Crude and refined technical glycerin from producers in Indonesia, Malaysia, and Germany. Active in the EU chemical market — cosmetic, pharmaceutical, and industrial grade.',
+      c2_name: 'Oleochemicals', c2_type: 'Fatty Acids & Derivatives', c2_desc: 'Fatty acids, fatty alcohols, and surfactants from APAC producers. Focused on the German and broader EU chemical market where import demand continues to grow.',
+      c3_name: 'Copper', c3_type: 'Non-Ferrous Metal', c3_desc: 'Copper cathode, concentrate, and ore from producers across DRC, Zambia, and Tanzania. Buyer interest in Shanghai and Hong Kong. Third-party inspection required on all deals.',
+      status_active: 'Active', status_pipeline: 'Pipeline',
+      prin_label: 'How We Work',
+      prin_h2_html: 'Non-negotiable<br /><em>standards.</em>',
+      p1_title: 'Buyer First', p1_body: 'Demand is confirmed before any supplier is approached. We do not pitch supply into a vacuum.',
+      p2_title: 'Market-Verified Pricing', p2_body: 'Every price indication is benchmarked against Platts, LME, or ICIS before it is communicated. No estimates presented as fact.',
+      p3_title: 'NCND Before Introduction', p3_body: 'No counterparty identity is shared without a signed Non-Circumvention Non-Disclosure Agreement. Every deal. No exceptions.',
+      p4_title: 'Logistics is the trade.', p4_body: 'A signed contract is the beginning, not the close. Freight, finance, and inspection are part of the same mandate.',
+      contact_label: 'Open a Discussion',
+      contact_h2_html: 'Tell us what you<br />need. <em>We\'ll tell you<br />if we can deliver it.</em>',
+      contact_lead: 'We work with buyers who know what they need and suppliers who can deliver it. If you have verified supply or confirmed demand, reach out directly.',
+      cr_email: 'Email', cr_location: 'Location', cr_location_val: 'Cologne–Bonn, Germany',
+      footer_tagline: 'Physical Commodity Brokerage · Cologne, Germany',
+      modal_title_html: 'Open a<br /><em>discussion.</em>',
+      f_name: 'Name', f_name_ph: 'Your name',
+      f_company: 'Company', f_company_ph: 'Company name',
+      f_email: 'Email',
+      f_role: 'I am a', f_role_select: 'Select role',
+      f_role_buyer: 'Buyer — looking for supply',
+      f_role_supplier: 'Supplier — looking for buyers',
+      f_role_other: 'Other',
+      f_message: 'Message', f_message_ph: 'Commodity, volume, origin/destination, timeline — the more specific, the better.',
+      f_submit: 'Open Email & Send',
+      f_error: 'Please fill all fields',
+      success_title: 'Inquiry received.',
+      success_sub: 'Your mail app should have opened with a pre-filled draft. If not, send directly to:',
+      ticker: ['Cologne · Germany','Independent Broker','NCND Protected','EU · Asia · Global','Verified Counterparties','Physical Commodities','1,000 MT Minimum','Market-Verified Pricing','Direct Relationships','No Broker Chains'],
+    },
+    de: {
+      nav_inquiry: 'Anfrage senden',
+      hero_tag: 'Unabhängiger Desk · Nur qualifizierte Mandate',
+      hero_h1_html: 'Die stille Brücke<br />des <em>industriellen<br />Flusses.</em>',
+      hero_sub: 'Morina Trading verbindet verifizierte Lieferanten mit qualifizierten Käufern in der EU, Asien und weltweit. Seriöses Volumen. Direkte Beziehungen. Jeder Deal geschützt.',
+      btn_inquiry: 'Anfrage senden',
+      btn_capabilities: 'Bereiche ansehen',
+      model_label: 'Das Modell',
+      model_h2_html: 'Wir besitzen nichts.<br /><em>Wir bewegen alles.</em>',
+      model_intro_html: 'Morina Trading agiert als <strong>unabhängiger Rohstoffmakler</strong> — wir erschließen verifiziertes Angebot, qualifizieren echte Nachfrage und strukturieren Deals, die alle Parteien vom ersten Kontakt bis zur Ausführung schützen.',
+      step1_title: 'Nachfrage qualifizieren', step1_body: 'Die Kaufabsicht wird bestätigt, bevor ein Lieferant kontaktiert wird. Wir nähern uns nie dem Angebot ohne verifizierten Bedarf.',
+      step2_title: 'Angebot verifizieren', step2_body: 'Jeder Lieferant in unserem Netzwerk wird geprüft — Handelsregistereintrag, Zertifizierungen und Referenzen vor der Zusammenarbeit.',
+      step3_title: 'Beide Parteien schützen', step3_body: 'NCND-Vereinbarungen werden vor jeder Einführung unterzeichnet. Keine Namen, keine Details ohne schriftlichen Schutz.',
+      step4_title: 'Logistik ist das Geschäft.', step4_body: 'Ein unterzeichneter Vertrag ist der Anfang, nicht das Ende. Specs, Incoterms, Zahlungsstruktur und Inspektion gehören zum selben Mandat.',
+      comm_label: 'Aktiver Desk',
+      comm_h2_html: 'Wo wir<br /><em>tätig sind.</em>',
+      c1_name: 'Glycerin', c1_type: 'Industriechemikalie', c1_desc: 'Rohes und raffiniertes technisches Glycerin von Produzenten in Indonesien, Malaysia und Deutschland. Aktiv im EU-Chemiemarkt — kosmetischer, pharmazeutischer und industrieller Verwendung.',
+      c2_name: 'Oleochemikalien', c2_type: 'Fettsäuren & Derivate', c2_desc: 'Fettsäuren, Fettalkohole und Tenside von APAC-Produzenten. Fokus auf den deutschen und europäischen Chemiemarkt, wo die Importnachfrage wächst.',
+      c3_name: 'Kupfer', c3_type: 'Nichteisenmetall', c3_desc: 'Kupferkathoden, Konzentrat und Erz von Produzenten in DRC, Sambia und Tansania. Käuferinteresse in Shanghai und Hongkong. Drittanbieterinspektion bei allen Deals erforderlich.',
+      status_active: 'Aktiv', status_pipeline: 'Pipeline',
+      prin_label: 'Unsere Arbeitsweise',
+      prin_h2_html: 'Nicht verhandelbare<br /><em>Standards.</em>',
+      p1_title: 'Käufer zuerst', p1_body: 'Die Nachfrage wird bestätigt, bevor ein Lieferant angesprochen wird. Wir vermarkten kein Angebot ins Leere.',
+      p2_title: 'Marktgeprüfte Preise', p2_body: 'Jede Preisindikation wird anhand von Platts, LME oder ICIS geprüft, bevor sie kommuniziert wird. Keine Schätzungen als Fakten.',
+      p3_title: 'NCND vor jeder Einführung', p3_body: 'Keine Gegenpartei wird ohne unterzeichnetes NCND-Abkommen genannt. Jeder Deal. Keine Ausnahmen.',
+      p4_title: 'Logistik ist das Geschäft.', p4_body: 'Ein unterzeichneter Vertrag ist der Anfang, nicht das Ende. Fracht, Finanzierung und Inspektion gehören dazu.',
+      contact_label: 'Gespräch beginnen',
+      contact_h2_html: 'Sagen Sie uns, was<br />Sie brauchen. <em>Wir sagen,<br />ob wir liefern können.</em>',
+      contact_lead: 'Wir arbeiten mit Käufern, die wissen was sie brauchen, und Lieferanten, die liefern können. Melden Sie sich direkt.',
+      cr_email: 'E-Mail', cr_location: 'Standort', cr_location_val: 'Köln–Bonn, Deutschland',
+      footer_tagline: 'Rohstoffmakler · Köln, Deutschland',
+      modal_title_html: 'Gespräch<br /><em>beginnen.</em>',
+      f_name: 'Name', f_name_ph: 'Ihr Name',
+      f_company: 'Unternehmen', f_company_ph: 'Firmenname',
+      f_email: 'E-Mail',
+      f_role: 'Ich bin', f_role_select: 'Rolle auswählen',
+      f_role_buyer: 'Käufer — suche Lieferanten',
+      f_role_supplier: 'Lieferant — suche Käufer',
+      f_role_other: 'Sonstiges',
+      f_message: 'Nachricht', f_message_ph: 'Rohstoff, Volumen, Herkunft/Ziel, Zeitplan — je genauer, desto besser.',
+      f_submit: 'E-Mail öffnen & senden',
+      f_error: 'Bitte alle Felder ausfüllen',
+      success_title: 'Anfrage erhalten.',
+      success_sub: 'Ihre Mail-App sollte sich mit einem vorausgefüllten Entwurf geöffnet haben. Falls nicht, schreiben Sie direkt an:',
+      ticker: ['Köln · Deutschland','Unabhängiger Makler','NCND-Geschützt','EU · Asien · Global','Verifizierte Partner','Physische Rohstoffe','Minimum 1.000 MT','Marktgeprüfte Preise','Direkte Beziehungen','Keine Maklerketten'],
+    },
+    fr: {
+      nav_inquiry: 'Faire une demande',
+      hero_tag: 'Desk indépendant · Mandats qualifiés uniquement',
+      hero_h1_html: 'Le pont discret<br />du <em>flux<br />industriel.</em>',
+      hero_sub: 'Morina Trading connecte des fournisseurs vérifiés avec des acheteurs qualifiés en Europe, en Asie et sur les marchés mondiaux. Volume sérieux. Relations directes. Chaque transaction protégée.',
+      btn_inquiry: 'Faire une demande',
+      btn_capabilities: 'Voir les capacités',
+      model_label: 'Le Modèle',
+      model_h2_html: 'Nous ne possédons rien.<br /><em>Nous déplaçons tout.</em>',
+      model_intro_html: 'Morina Trading opère en tant que <strong>courtier en matières premières indépendant</strong> — nous sourceons une offre vérifiée, qualifions une demande réelle et structurons des transactions qui protègent toutes les parties.',
+      step1_title: 'Qualifier la demande', step1_body: "L'intention d'achat est confirmée avant tout contact fournisseur. Nous n'approchons jamais l'offre sans besoin vérifié.",
+      step2_title: "Vérifier l'offre", step2_body: "Chaque fournisseur est examiné — enregistrement commercial, certifications et références confirmés avant l'engagement.",
+      step3_title: 'Protéger les deux parties', step3_body: "Les accords NCND sont signés avant toute introduction. Aucun nom, aucun détail échangé sans protection écrite.",
+      step4_title: 'La logistique, c\'est le deal.', step4_body: "Un contrat signé est le début, pas la fin. Les specs, incoterms, paiement et inspection font partie du même mandat.",
+      comm_label: 'Desk actif',
+      comm_h2_html: 'Où nous<br /><em>opérons.</em>',
+      c1_name: 'Glycérine', c1_type: 'Chimique industriel', c1_desc: "Glycérine brute et raffinée de producteurs en Indonésie, Malaisie et Allemagne. Actif sur le marché chimique européen — grades cosmétique, pharmaceutique et industriel.",
+      c2_name: 'Oléochimiques', c2_type: 'Acides gras & dérivés', c2_desc: "Acides gras, alcools gras et tensioactifs de producteurs APAC. Focus sur le marché chimique allemand et européen où la demande d'importation croît.",
+      c3_name: 'Cuivre', c3_type: 'Métal non ferreux', c3_desc: "Cathodes, concentré et minerai de cuivre de producteurs en RDC, Zambie et Tanzanie. Intérêt acheteur à Shanghai et Hong Kong. Inspection tierce requise.",
+      status_active: 'Actif', status_pipeline: 'Pipeline',
+      prin_label: 'Notre méthode',
+      prin_h2_html: 'Standards<br /><em>non négociables.</em>',
+      p1_title: "L'acheteur d'abord", p1_body: "La demande est confirmée avant tout contact fournisseur. Nous ne commercialisons pas dans le vide.",
+      p2_title: 'Prix vérifiés au marché', p2_body: "Chaque indication de prix est vérifiée via Platts, LME ou ICIS. Aucune estimation présentée comme un fait.",
+      p3_title: 'NCND avant introduction', p3_body: "Aucune identité de contrepartie n'est partagée sans accord NCND signé. Chaque transaction. Sans exception.",
+      p4_title: 'La logistique, c\'est le trade.', p4_body: "Un contrat signé est le début. Fret, finance et inspection font partie du même mandat.",
+      contact_label: 'Ouvrir une discussion',
+      contact_h2_html: 'Dites-nous ce dont<br />vous avez besoin. <em>Nous vous dirons<br />si nous pouvons livrer.</em>',
+      contact_lead: "Nous travaillons avec des acheteurs qui savent ce qu'ils veulent et des fournisseurs qui peuvent livrer. Contactez-nous directement.",
+      cr_email: 'E-mail', cr_location: 'Localisation', cr_location_val: 'Cologne–Bonn, Allemagne',
+      footer_tagline: 'Courtage en matières premières · Cologne, Allemagne',
+      modal_title_html: 'Ouvrir une<br /><em>discussion.</em>',
+      f_name: 'Nom', f_name_ph: 'Votre nom',
+      f_company: 'Société', f_company_ph: 'Nom de la société',
+      f_email: 'E-mail',
+      f_role: 'Je suis', f_role_select: 'Sélectionner un rôle',
+      f_role_buyer: 'Acheteur — cherche un fournisseur',
+      f_role_supplier: 'Fournisseur — cherche des acheteurs',
+      f_role_other: 'Autre',
+      f_message: 'Message', f_message_ph: 'Matière première, volume, origine/destination, délai — plus c\'est précis, mieux c\'est.',
+      f_submit: 'Ouvrir e-mail & envoyer',
+      f_error: 'Veuillez remplir tous les champs',
+      success_title: 'Demande reçue.',
+      success_sub: "Votre client mail devrait s'être ouvert avec un brouillon pré-rempli. Sinon, écrivez directement à :",
+      ticker: ['Cologne · Allemagne','Courtier indépendant','Protégé NCND','EU · Asie · Mondial','Contreparties vérifiées','Matières premières physiques','1 000 MT minimum','Prix vérifiés','Relations directes','Sans chaînes de courtage'],
+    },
+    ar: {
+      nav_inquiry: 'إرسال استفسار',
+      hero_tag: 'مكتب مستقل · تفويضات مؤهلة فقط',
+      hero_h1_html: 'الجسر الهادئ<br />لتدفق <em>الصناعة.</em>',
+      hero_sub: 'موريناترادينغ تربط الموردين المعتمدين بالمشترين المؤهلين في أوروبا وآسيا والأسواق العالمية. حجم جادّ. علاقات مباشرة. كل صفقة محمية.',
+      btn_inquiry: 'إرسال استفسار',
+      btn_capabilities: 'عرض الإمكانيات',
+      model_label: 'النموذج',
+      model_h2_html: 'لا نملك شيئاً.<br /><em>نحرّك كل شيء.</em>',
+      model_intro_html: 'تعمل موريناترادينغ بوصفها <strong>وسيطاً مستقلاً للسلع</strong> — نؤمّن العرض المعتمد، ونؤهّل الطلب الحقيقي، ونهيكل الصفقات التي تحمي جميع الأطراف.',
+      step1_title: 'تأهيل الطلب', step1_body: 'يُؤكَّد نية الشراء قبل التواصل مع أي مورد. لا نقترب من العرض دون حاجة موثّقة.',
+      step2_title: 'التحقق من العرض', step2_body: 'يخضع كل مورد في شبكتنا للمراجعة — تسجيل الشركة والشهادات والمراجع قبل التعاقد.',
+      step3_title: 'حماية الطرفين', step3_body: 'تُوقَّع اتفاقيات NCND قبل أي تعريف. لا أسماء ولا تفاصيل دون حماية مكتوبة.',
+      step4_title: 'اللوجستيات هي الصفقة.', step4_body: 'العقد الموقّع هو البداية لا النهاية. المواصفات والشروط وهيكل الدفع والتفتيش جزء من نفس التفويض.',
+      comm_label: 'المكتب النشط',
+      comm_h2_html: 'أين<br /><em>نعمل.</em>',
+      c1_name: 'الجلسرين', c1_type: 'مادة كيميائية صناعية', c1_desc: 'جلسرين خام ومكرر من منتجين في إندونيسيا وماليزيا وألمانيا. نشط في السوق الكيميائية الأوروبية — درجات تجميل وصيدلة وصناعة.',
+      c2_name: 'المواد الأوليوكيميائية', c2_type: 'أحماض دهنية ومشتقاتها', c2_desc: 'أحماض دهنية وكحولات دهنية ومواد فعّالة بالسطح من منتجي آسيا والمحيط الهادئ. التركيز على السوق الكيميائية الألمانية والأوروبية.',
+      c3_name: 'النحاس', c3_type: 'معدن غير حديدي', c3_desc: 'كاثودات ومركّزات وخام نحاس من منتجين في الكونغو وزامبيا وتنزانيا. اهتمام المشترين في شنغهاي وهونغ كونغ. يُشترط التفتيش من طرف ثالث.',
+      status_active: 'نشط', status_pipeline: 'قيد التطوير',
+      prin_label: 'طريقة عملنا',
+      prin_h2_html: 'معايير<br /><em>غير قابلة للتفاوض.</em>',
+      p1_title: 'المشتري أولاً', p1_body: 'يُؤكَّد الطلب قبل التواصل مع أي مورد. لا نروّج عروضاً في فراغ.',
+      p2_title: 'أسعار موثّقة بالسوق', p2_body: 'كل إشارة سعرية تُقارن بـ Platts أو LME أو ICIS قبل إبلاغها. لا تقديرات تُقدَّم كحقائق.',
+      p3_title: 'NCND قبل أي تعريف', p3_body: 'لا تُشارَك هوية أي طرف دون اتفاقية NCND موقّعة. كل صفقة. بلا استثناء.',
+      p4_title: 'اللوجستيات هي التجارة.', p4_body: 'العقد الموقّع هو البداية. الشحن والتمويل والتفتيش جزء من نفس التفويض.',
+      contact_label: 'فتح نقاش',
+      contact_h2_html: 'أخبرنا بما<br />تحتاج. <em>سنخبرك<br />إن كنّا قادرين على التسليم.</em>',
+      contact_lead: 'نعمل مع مشترين يعرفون ما يحتاجون وموردين قادرين على التسليم. تواصل معنا مباشرة.',
+      cr_email: 'البريد الإلكتروني', cr_location: 'الموقع', cr_location_val: 'كولونيا–بون، ألمانيا',
+      footer_tagline: 'وساطة في السلع · كولونيا، ألمانيا',
+      modal_title_html: 'فتح<br /><em>نقاش.</em>',
+      f_name: 'الاسم', f_name_ph: 'اسمك',
+      f_company: 'الشركة', f_company_ph: 'اسم الشركة',
+      f_email: 'البريد الإلكتروني',
+      f_role: 'أنا', f_role_select: 'اختر الدور',
+      f_role_buyer: 'مشترٍ — أبحث عن مورد',
+      f_role_supplier: 'مورد — أبحث عن مشترين',
+      f_role_other: 'أخرى',
+      f_message: 'الرسالة', f_message_ph: 'السلعة، الحجم، المنشأ/الوجهة، الجدول الزمني — كلما كانت التفاصيل أدق، كان أفضل.',
+      f_submit: 'فتح البريد وإرساله',
+      f_error: 'يرجى ملء جميع الحقول',
+      success_title: 'تم استلام الاستفسار.',
+      success_sub: 'يجب أن يكون تطبيق البريد قد فُتح بمسودة مُعبأة مسبقاً. إن لم يحدث، أرسل مباشرة إلى:',
+      ticker: ['كولونيا · ألمانيا','وسيط مستقل','محمي بـ NCND','أوروبا · آسيا · عالمياً','أطراف موثّقة','سلع مادية','الحد الأدنى 1,000 طن','أسعار موثّقة','علاقات مباشرة','بدون سلاسل وساطة'],
+    }
+  };
+
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    const t = T[lang];
+    document.documentElement.lang = lang;
+
+    // RTL for Arabic
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+    // Update all data-t elements
+    document.querySelectorAll('[data-t]').forEach(el => {
+      const key = el.getAttribute('data-t');
+      if (t[key] !== undefined) {
+        if (key.endsWith('_html')) {
+          el.innerHTML = t[key];
+        } else {
+          el.textContent = t[key];
+        }
+      }
+    });
+
+    // Update placeholders
+    document.querySelectorAll('[data-placeholder-t]').forEach(el => {
+      const key = el.getAttribute('data-placeholder-t');
+      if (t[key]) el.placeholder = t[key];
+    });
+
+    // Update select options
+    const roleSelect = document.getElementById('f-role');
+    if (roleSelect) {
+      roleSelect.options[0].text = t.f_role_select;
+      roleSelect.options[1].text = t.f_role_buyer;
+      roleSelect.options[2].text = t.f_role_supplier;
+      roleSelect.options[3].text = t.f_role_other;
+    }
+
+    // Update ticker
+    buildTicker(t.ticker);
+
+    // Update lang buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+    });
+  }
+
+  function buildTicker(items) {
+    const track = document.getElementById('tickerTrack');
+    const doubled = [...items, ...items];
+    track.innerHTML = doubled.map(item => `<div class="ticker-item">${item}</div>`).join('');
+  }
+
+  // ─────────────────────────────────────────
+  // MODAL
+  // ─────────────────────────────────────────
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // reset state
+    document.getElementById('modalForm').classList.remove('hide');
+    document.getElementById('modalSuccess').classList.remove('show');
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  function submitForm() {
+    const t = T[currentLang];
+    const name    = document.getElementById('f-name').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const role    = document.getElementById('f-role').value;
+    const message = document.getElementById('f-message').value.trim();
+
+    if (!name || !email || !role || !message) {
+      const btn = document.querySelector('.modal-submit');
+      const orig = btn.textContent;
+      btn.style.background = '#c0392b';
+      btn.textContent = t.f_error;
+      setTimeout(() => { btn.style.background = ''; btn.textContent = orig; }, 1800);
+      return;
+    }
+
+    const company = document.getElementById('f-company').value.trim();
+    const subject = encodeURIComponent('Inquiry — Morina Trading');
+    const body    = encodeURIComponent(`Name: ${name}\nCompany: ${company||'—'}\nEmail: ${email}\nRole: ${role}\n\nMessage:\n${message}`);
+    // Try to open mail client
+    const mailtoLink = `mailto:argent@morinatrading.com?subject=${subject}&body=${body}`;
+    const mailWindow = window.open(mailtoLink, '_self');
+
+    // Show success regardless — includes direct email as fallback
+    document.getElementById('modalForm').classList.add('hide');
+    document.getElementById('modalSuccess').classList.add('show');
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // ─────────────────────────────────────────
+  // SCROLL ANIMATIONS
+  // ─────────────────────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  setTimeout(() => { document.querySelector('.hero .fade-up')?.classList.add('visible'); }, 100);
+
+  // ─────────────────────────────────────────
+  // INIT
+  // ─────────────────────────────────────────
+  setLang('en');
+  </script>
+</body>
+</html>
